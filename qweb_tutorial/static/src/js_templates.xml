@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- for JS: QWEB temapltes can be created using templates as the 
+    root element,
+    - like qweb python template this file is not added into data but
+    under assets property
+    - this template is not added into database and can be loaded only when
+    require using `t-call-assets` directive 
+        <t t-call-assets="web.assets_frontend" t-js="false" > 
+    - we can find assets by inspecting -> Network -> JS, in this we can serach our module
+    as well as the template that we have created
+    - this template can then interpret JS expression or any `prop` added by
+    owl component or widgets
+-->
+
+
+<templates xml:space="preserve">
+    <t t-name="qweb_turorials.someJSTemplate">
+        <div class="alert alert-primary">
+            <h3>This is the main template</h3>
+        </div>
+    </t>
+</templates>
