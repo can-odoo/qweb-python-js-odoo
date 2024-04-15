@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates>
+    <!-- Main Component -->
+    <t t-name="qweb_tutorial.owl_main_component" >
+        <div class="p-4 border">
+            <h3>This is rendered using OWL.</h3>
+            <button class="btn btn-primary" t-on-click="increaseCounter">
+                Counter: <span t-out="state.counter"/>
+            </button>
+
+            <hr/>
+            <p>Date: <span t-out="date"/></p>
+            <hr/>
+
+            <ul>
+                <li t-foreach="someList" t-as="l" t-key="l">
+                    <span t-out="l"/>
+                </li>
+            </ul>
+            <!-- Sub Component -->
+            <OwlSubComponent/>
+
+            <!-- Add slots as a childrean element of a Componnet -->
+            <OwlSubComponent>
+                <!-- any children element inside will be rendered in the subcomponent -->
+                <t t-slot="title">
+                    <h2>Rendered using slot</h2>
+                </t>
+                <t t-slot="date_author">
+                    <div>
+                        <t t-set="article_date" t-value="new Date()"/>
+                        <small t-out="article_date.toLocaleString()" />
+                        <small>Chintan</small>
+                    </div>
+                </t>
+                <hr/>
+                <!-- for any children elemt without t-slot will be rnder using default value -->
+                <p>Add any children content here.</p>
+                <!-- <button class="butn btn-primary">Learn More</button> -->
+                <a class="btn btn-primary" t-attf-href="https://github.com/odoo/owl/blob/master/doc/reference/slots.md" target="_blank">Learn More OWL SLOTS</a>
+            </OwlSubComponent>
+
+            <!-- Inherited Template component -->
+            <OwlSubComponentChild>
+                <t t-slot="title">
+                    <h2>Rendered using slot</h2>
+                </t>
+                <t t-slot="date_author">
+                    <div>
+                        <t t-set="article_date" t-value="new Date()"/>
+                        <small t-out="article_date.toLocaleString()" />
+                        <small>Chintan</small>
+                    </div>
+                </t>
+                <hr/>
+                <!-- for any children elemt without t-slot will be rnder using default value -->
+                <p>Add any children content here.</p>
+                <!-- <button class="butn btn-primary">Learn More</button> -->
+                <a class="btn btn-primary" t-attf-href="https://github.com/odoo/owl/blob/master/doc/reference/slots.md" target="_blank">OWL SLOTS</a>
+            </OwlSubComponentChild>
+        </div>
+        <!-- we can directly use the componnet name to render subcomponent -->
+    </t>
+
+    <!-- OWL Sub-component -->
+    <t t-name="qweb_tutorial.owl_sub_component">
+        <div>
+            <h4>This is an OWL sub componnet template</h4>
+            <!-- OWL slot template, for slot template we need to use t-set-slot directive -->
+            <article class="alert alert-info">
+                <t t-set-slot="title"/>
+                <t t-set-slot="date_author"/>
+                <t t-slot="default"/>  <!-- for any childrean element -->
+            </article>
+        </div>
+    </t>
+
+    <!-- OWL template inheritance -->
+    <t t-inherit="qweb_tutorial.owl_sub_component" t-inherit-mode="extension"> <!-- will affect main template using extension-->
+        <xpath expr="//article" position="after">
+            <p>Template inheritance using extention inherit mode.</p>
+        </xpath>
+    </t>
+
+    <!-- to render this componet we also need to add new component in JS side -->
+    <!-- primary mode won;t affect the main template and create new one -->
+    <t t-name="qweb_tutorial.owl_sub_component_child" t-inherit="qweb_tutorial.owl_sub_component" t-inherit-mode="primary">
+        <xpath expr="//article" position="attributes">
+            <attribute name="class" separator=" " add="alert-primary" remove="alert-info" value=""></attribute>
+        </xpath>
+    </t>
+</templates>
